@@ -2,6 +2,7 @@
 session_start();
 //ob_start();
 include('../mysql/class.connection.php');
+require_once('../mail/PHPMailerAutoload');
 $connection=new getConnection();
 $con=$connection->connect();
 $action=$_REQUEST['action'];
@@ -43,5 +44,10 @@ if($action=='signup')
 		echo"invalid captcha";
 	}
 
+
+}
+
+function email_signup($tomail,$fromEmail,$subject,$body)
+{
 
 }
