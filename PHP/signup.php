@@ -32,6 +32,10 @@ if($action=='signup')
 				$insert_qry=mysqli_query($con,$qry_insert);
 				if($insert_qry)
 				{
+					$fromEmail='umashankar.ghadai@connectix.net';
+					$subject='Registration success';
+					$body='Registration successful';
+					email_signup($email,$fromEmail,$subject,$body);
 					echo"inserted";
 				}
 				else{
@@ -50,4 +54,28 @@ if($action=='signup')
 function email_signup($tomail,$fromEmail,$subject,$body)
 {
 	
+			$mail = new PHPMailer;
+			$mail->isSMTP();    
+			$mail->SMTPDebug = 1;                                // Set mailer to use SMTP
+			$mail->Host = 'smtp.gmail.com';  					// Specify main and backup SMTP servers
+			$mail->SMTPAuth = true;                           // Enable SMTP authentication
+			$mail->Username = 'ughadai.kulu@gmail.com';          // SMTP username
+			$mail->Password = 'Kuntala#';                   // SMTP password
+			$mail->SMTPSecure = 'tls';                          	// Enable TLS encryption, `ssl` also accepted
+			$mail->Port = 587;                                  // TCP port to connect to
+
+			$mail->setFrom($fromEmail, 'OWOS');
+			$mail->addAddress($tomail);     // Add a recipient
+			$mail->isHTML(true);                                  // Set email format to HTML
+
+			$mail->Subject = $subject;
+			$mail->Body    =$body;
+			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+				if(!$mail->send()) {
+				    echo 'Message could not be sent.';
+				    echo 'Mailer Error: ' . $mail->ErrorInfo;
+				} else {
+				    echo 'success';
+				}
 }
+
